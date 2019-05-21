@@ -1,3 +1,17 @@
+github:
+    asset-upload:
+        file: ~
+        user: ~
+        project: ~
+        tag: ~
+    release-edit:
+        file: ~
+        user: ~
+        project: ~
+        tag: ~
+        name: ~
+        body: ~
+
 commands:
     github:asset-upload:
         description: Upload a file (asset) to a Github release.
@@ -13,23 +27,28 @@ commands:
             file:
                 config: github.asset-upload.file
                 description: 'The asset file to upload.'
-                default: ${github.asset-upload.file}
+                mode: 2
+                default: null
             user:
                 config: github.asset-upload.user
                 description: 'The user.'
-                default: ${github.asset-upload.user}
+                mode: 2
+                default: null
             project:
                 config: github.asset-upload.project
                 description: 'The project.'
-                default: ${github.asset-upload.project}
+                mode: 2
+                default: null
             token:
                 config: github.token
                 description: 'The Github token'
-                default: ${github.token}
+                mode: 2
+                default: null
             tag:
                 config: github.asset-upload.tag
                 description: 'The release tag.'
-                default: ${github.asset-upload.tag}
+                mode: 2
+                default: null
 
     github:release-edit:
         description: Edit a Github release.
@@ -46,27 +65,33 @@ commands:
             user:
                 config: github.release-edit.user
                 description: 'The user.'
-                default: ${github.asset-upload.user}
+                mode: 2
+                default: null
             project:
                 config: github.release-edit.project
                 description: 'The project.'
-                default: ${github.asset-upload.project}
+                mode: 2
+                default: null
             token:
                 config: github.token
                 description: 'The Github token'
-                default: ${github.token}
+                mode: 2
+                default: null
             tag:
                 config: github.release-edit.tag
                 description: 'The release tag.'
-                default: ${github.asset-upload.tag}
+                mode: 2
+                default: null
             body:
                 config: github.release-edit.body
                 description: 'The release body.'
-                default: ${github.release-edit.body}
+                mode: 4
+                default: null
             name:
                 config: github.release-edit.name
                 description: 'The release name.'
-                default: ${github.release-edit.name}
+                mode: 4
+                default: null
 
 
 
