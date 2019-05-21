@@ -14,7 +14,7 @@
         "ext-json": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
-        "phptaskman/core": "^0.1.14"
+        "phptaskman/core": "^0.1.15"
     },
     "require-dev": {
         "drupol/php-conventions": "^1.3.3"
