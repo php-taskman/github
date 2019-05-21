@@ -1,0 +1,40 @@
+{
+    "name": "phptaskman/github",
+    "type": "library",
+    "description": "Github tasks for Taskman.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pol Dellaiera",
+            "email": "pol.dellaiera@protonmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.6",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-fileinfo": "*",
+        "phptaskman/core": "^0.1.13"
+    },
+    "require-dev": {
+        "drupol/php-conventions": "^1.3.3"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpTaskman\\Github\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpTaskman\\Github\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "codecept": "./vendor/bin/codecept run",
+        "codecept-coverage": "./vendor/bin/codecept run --coverage --coverage-xml --env travis",
+        "grumphp": "./vendor/bin/grumphp run"
+    }
+}
