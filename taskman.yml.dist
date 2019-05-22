@@ -10,10 +10,16 @@ github:
         project: ~
         tag: ~
     release-edit:
-        file: ~
         user: ~
         project: ~
         tag: ~
+        name: ~
+        body: ~
+    release-create:
+        user: ~
+        project: ~
+        tag: ~
+        target: ~
         name: ~
         body: ~
 
@@ -134,6 +140,56 @@ commands:
                 description: 'The release name.'
                 mode: 4
                 default: null
+
+    github:release-create:
+        description: Create a Github release.
+        tasks:
+            -
+                task: github.release.create
+                user: ${github.release-create.user}
+                project: ${github.release-create.project}
+                token: ${github.token}
+                tag: ${github.release-create.tag}
+                target: ${github.release-create.target}
+                body: ${github.release-create.body}
+                name: ${github.release-create.name}
+        options:
+            user:
+                config: github.release-create.user
+                description: 'The user.'
+                mode: 2
+                default: null
+            project:
+                config: github.release-create.project
+                description: 'The project.'
+                mode: 2
+                default: null
+            token:
+                config: github.token
+                description: 'The Github token'
+                mode: 2
+                default: null
+            tag:
+                config: github.release-create.tag
+                description: 'The release tag.'
+                mode: 2
+                default: null
+            target:
+                config: github.release-create.target
+                description: 'The release tag commit.'
+                mode: 4
+                default: null
+            body:
+                config: github.release-create.body
+                description: 'The release body.'
+                mode: 4
+                default: null
+            name:
+                config: github.release-create.name
+                description: 'The release name.'
+                mode: 4
+                default: null
+
 
 
 
