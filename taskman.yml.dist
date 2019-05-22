@@ -22,25 +22,25 @@ commands:
         description: Upload a file (asset) to a Github release.
         tasks:
             -
-                task: github.asset.upload
-                file: ${github.asset-upload.file}
-                user: ${github.asset-upload.user}
-                project: ${github.asset-upload.project}
+                task: github.asset.remove
+                file: ${github.asset-remove.file}
+                user: ${github.asset-remove.user}
+                project: ${github.asset-remove.project}
                 token: ${github.token}
-                tag: ${github.asset-upload.tag}
+                tag: ${github.asset-remove.tag}
         options:
             file:
-                config: github.asset-upload.file
-                description: 'The asset file to upload.'
+                config: github.asset-remove.file
+                description: 'The asset file to remove.'
                 mode: 2
                 default: null
             user:
-                config: github.asset-upload.user
+                config: github.asset-remove.user
                 description: 'The user.'
                 mode: 2
                 default: null
             project:
-                config: github.asset-upload.project
+                config: github.asset-remove.project
                 description: 'The project.'
                 mode: 2
                 default: null
@@ -50,7 +50,7 @@ commands:
                 mode: 2
                 default: null
             tag:
-                config: github.asset-upload.tag
+                config: github.asset-remove.tag
                 description: 'The release tag.'
                 mode: 2
                 default: null
