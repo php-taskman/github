@@ -72,9 +72,11 @@ final class ReleaseEditTask extends Github
                     $post
                 );
         } catch (\Exception $e) {
-            return new Result($this, $e->getCode(), $e->getMessage());
+            return new Result($this, Result::EXITCODE_ERROR, $e->getMessage());
         }
 
-        return new Result($this, '0');
+        $this->printTaskInfo('Release tag ' . $arguments['tag'] . ' has been updated.');
+
+        return new Result($this, Result::EXITCODE_OK);
     }
 }
