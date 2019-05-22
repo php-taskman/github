@@ -6,7 +6,8 @@ Taskman Github tasks.
 
 | Task                 | Arguments |
 | -------------------- | --------- |
-| `github.release.edit`| `project`, `tag`, `token`, `user`, `name`, `body`, `draft`,`prerelease` |
+| `github.asset.remove`| `file`, `project`, `tag`, `token`, `user` |
 | `github.asset.upload`| `file`, `project`, `tag`, `token`, `user` |
+| `github.release.edit`| `project`, `tag`, `token`, `user`, `name`, `body`, `draft`,`prerelease` |
 
 
