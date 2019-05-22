@@ -2,6 +2,7 @@
 
 namespace PhpTaskman\Github\Plugin\Task;
 
+use Github\Client;
 use Robo\Result;
 
 final class ReleaseEditTask extends Github
@@ -31,31 +32,20 @@ final class ReleaseEditTask extends Github
             'prerelease' => null,
         ];
 
-        list($code, $release) = $this->getReleaseFromTag(
-            $arguments['user'],
-            $arguments['project'],
-            $arguments['tag']
-        );
-
-        if (200 !== $code) {
-            return new Result($this, 1, 'Release tag ' . $arguments['tag'] . ' doesn\'t seems to exist.');
+        try {
+            $release = $this->getReleaseFromTag(
+                $arguments['user'],
+                $arguments['project'],
+                $arguments['tag']
+            );
+        } catch (\Exception $e) {
+            return new Result($this, $e->getCode(), $e->getMessage());
         }
-
-        $headers = [
-            'Authorization: token ' . $arguments['token'],
-            'Content-Type: application/json',
-        ];
-        $url = \sprintf(
-            'https://api.github.com/repos/%s/%s/releases/%s',
-            $arguments['user'],
-            $arguments['project'],
-            $release['id']
-        );
 
         $post = [
             'tag_name' => $arguments['tag'],
             'name' => $arguments['name'],
-            'body' => file_exists($arguments['body']) ? file_get_contents($arguments['body']) : $arguments['body'],
+            'body' => \file_exists($arguments['body']) ? \file_get_contents($arguments['body']) : $arguments['body'],
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];
@@ -68,13 +58,23 @@ final class ReleaseEditTask extends Github
             'prerelease' => $release['prerelease'],
         ];
 
-        list($code, $response) = $this->request($url, 'PATCH', $headers, \json_encode($post));
+        $github = new Client();
+        $github->authenticate($arguments['token'], null, Client::AUTH_URL_TOKEN);
 
-        if (200 !== $code) {
-            // Todo: beautify this.
-            return new Result($this, 1, 'Error');
+        try {
+            $github
+                ->repo()
+                ->releases()
+                ->edit(
+                    $arguments['user'],
+                    $arguments['project'],
+                    $release['id'],
+                    $post
+                );
+        } catch (\Exception $e) {
+            return new Result($this, $e->getCode(), $e->getMessage());
         }
 
-        return new Result($this, 0);
+        return new Result($this, '0');
     }
 }

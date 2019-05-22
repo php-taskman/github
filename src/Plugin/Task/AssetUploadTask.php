@@ -2,6 +2,7 @@
 
 namespace PhpTaskman\Github\Plugin\Task;
 
+use Github\Client;
 use Robo\Result;
 
 final class AssetUploadTask extends Github
@@ -23,65 +24,44 @@ final class AssetUploadTask extends Github
     {
         $arguments = $this->getTaskArguments();
 
-        list($code, $response) = $this->getReleaseFromTag(
-            $arguments['user'],
-            $arguments['project'],
-            $arguments['tag']
-        );
-
-        if (200 !== $code) {
-            return new Result($this, 1, 'Release tag ' . $arguments['tag'] . ' doesn\'t seems to exist.');
+        try {
+            $release = $this->getReleaseFromTag(
+                $arguments['user'],
+                $arguments['project'],
+                $arguments['tag']
+            );
+        } catch (\Exception $e) {
+            return new Result($this, $e->getCode(), $e->getMessage());
         }
 
-        if (\function_exists('curl_file_create')) {
-            $cFile = \curl_file_create($arguments['file']);
-        } else {
-            $cFile = '@' . \realpath($arguments['file']);
+        $github = new Client();
+        $github->authenticate($arguments['token'], null, Client::AUTH_URL_TOKEN);
+
+        if (false === $file = \realpath($arguments['file'])) {
+            return new Result($this, '1', 'Unable to access the file ' . $arguments['file']);
         }
 
-        $headers = [
-            'Transfer-Encoding: identity',
-            'Authorization: token ' . $arguments['token'],
-            'Content-Type: ' . \mime_content_type($arguments['file']),
-        ];
-        $url = \sprintf(
-            'https://uploads.github.com/repos/%s/%s/releases/%s/assets?name=%s',
-            $arguments['user'],
-            $arguments['project'],
-            $response['id'],
-            $arguments['file']
-        );
-        $post = ['file_contents' => $cFile];
-
-        list($code, $response) = $this->request($url, 'POST', $headers, $post);
-
-        if (isset($result['errors'])) {
-            // Todo: beautify this.
-            return new Result($this, 1, 'error');
+        if (false === $mime = \mime_content_type($file)) {
+            return new Result($this, '1', 'Unable to get mimetype of file ' . $arguments['file']);
         }
 
-        return new Result($this, 0);
-    }
+        if (false === $content = \file_get_contents($file)) {
+            return new Result($this, '1', 'Unable to get content of file ' . $arguments['file']);
+        }
 
-    /**
-     * @param string $user
-     * @param string $project
-     * @param string $tag
-     *
-     * @return array
-     *   Todo
-     */
-    protected function getReleaseFromTag($user, $project, $tag)
-    {
-        $url = \sprintf(
-            '%s/repos/%s/%s/%s/%s',
-            self::GITHUB_URL,
-            $user,
-            $project,
-            'releases/tags',
-            $tag
-        );
+        try {
+            $github->repo()->releases()->assets()->create(
+                $arguments['user'],
+                $arguments['project'],
+                $release['id'],
+                $arguments['file'],
+                $mime,
+                $content
+            );
+        } catch (\Exception $e) {
+            return new Result($this, $e->getCode(), $e->getMessage());
+        }
 
-        return $this->request($url, 'GET');
+        return new Result($this, '0');
     }
 }
