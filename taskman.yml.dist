@@ -1,4 +1,9 @@
 github:
+    asset-remove:
+        file: ~
+        user: ~
+        project: ~
+        tag: ~
     asset-upload:
         file: ~
         user: ~
@@ -13,6 +18,43 @@ github:
         body: ~
 
 commands:
+    github:asset-remove:
+        description: Upload a file (asset) to a Github release.
+        tasks:
+            -
+                task: github.asset.remove
+                file: ${github.asset-remove.file}
+                user: ${github.asset-remove.user}
+                project: ${github.asset-remove.project}
+                token: ${github.token}
+                tag: ${github.asset-remove.tag}
+        options:
+            file:
+                config: github.asset-remove.file
+                description: 'The asset file to remove.'
+                mode: 2
+                default: null
+            user:
+                config: github.asset-remove.user
+                description: 'The user.'
+                mode: 2
+                default: null
+            project:
+                config: github.asset-remove.project
+                description: 'The project.'
+                mode: 2
+                default: null
+            token:
+                config: github.token
+                description: 'The Github token'
+                mode: 2
+                default: null
+            tag:
+                config: github.asset-remove.tag
+                description: 'The release tag.'
+                mode: 2
+                default: null
+
     github:asset-upload:
         description: Upload a file (asset) to a Github release.
         tasks:
