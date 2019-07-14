@@ -49,7 +49,7 @@ final class ReleaseEditTask extends Github
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];
-        $post = \array_filter($post, 'strlen');
+        $post = \array_filter($post, '\strlen');
         $post += [
             'target_commitish' => $release['target_commitish'],
             'name' => $release['name'],
@@ -72,11 +72,11 @@ final class ReleaseEditTask extends Github
                     $post
                 );
         } catch (\Exception $e) {
-            return new Result($this, Result::EXITCODE_ERROR, $e->getMessage());
+            return new Result($this, (string) Result::EXITCODE_ERROR, $e->getMessage());
         }
 
         $this->printTaskInfo('Release tag ' . $arguments['tag'] . ' has been updated.');
 
-        return new Result($this, Result::EXITCODE_OK);
+        return new Result($this, (string) Result::EXITCODE_OK);
     }
 }
