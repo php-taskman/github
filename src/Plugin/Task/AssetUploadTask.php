@@ -59,11 +59,11 @@ final class AssetUploadTask extends Github
                 $content
             );
         } catch (\Exception $e) {
-            return new Result($this, (string) Result::EXITCODE_ERROR, $e->getMessage());
+            return new Result($this, Result::EXITCODE_ERROR, $e->getMessage());
         }
 
         $this->printTaskInfo('Asset ' . $arguments['file'] . ' has been uploaded.');
 
-        return new Result($this, (string) Result::EXITCODE_OK);
+        return new Result($this, Result::EXITCODE_OK);
     }
 }

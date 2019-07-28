@@ -52,7 +52,7 @@ final class AssetRemoveTask extends Github
         if (null === $asset) {
             $this->printTaskInfo('No such asset was found, nothing to be removed.');
 
-            return new Result($this, (string) Result::EXITCODE_OK);
+            return new Result($this, Result::EXITCODE_OK);
         }
 
         try {
@@ -65,11 +65,11 @@ final class AssetRemoveTask extends Github
                     $asset['id']
                 );
         } catch (\Exception $e) {
-            return new Result($this, (string) Result::EXITCODE_ERROR, $e->getMessage());
+            return new Result($this, Result::EXITCODE_ERROR, $e->getMessage());
         }
 
         $this->printTaskInfo('Asset has been removed.');
 
-        return new Result($this, (string) Result::EXITCODE_OK);
+        return new Result($this, Result::EXITCODE_OK);
     }
 }

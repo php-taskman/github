@@ -59,11 +59,11 @@ final class ReleaseCreateTask extends Github
                     $post
                 );
         } catch (\Exception $e) {
-            return new Result($this, (string) Result::EXITCODE_ERROR, $e->getMessage());
+            return new Result($this, Result::EXITCODE_ERROR, $e->getMessage());
         }
 
         $this->printTaskInfo('Release has been created.');
 
-        return new Result($this, (string) Result::EXITCODE_OK);
+        return new Result($this, Result::EXITCODE_OK);
     }
 }
