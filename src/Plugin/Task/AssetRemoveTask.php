@@ -40,6 +40,7 @@ final class AssetRemoveTask extends Github
         $release += ['assets' => []];
 
         $asset = null;
+
         foreach ($release['assets'] as $releaseAsset) {
             if ($releaseAsset['name'] !== $arguments['file']) {
                 continue;
