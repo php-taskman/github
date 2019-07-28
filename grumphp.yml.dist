@@ -10,5 +10,3 @@ parameters:
         - vendor/
         - spec/
         - tests/
-    extensions:
-        - drupol\PhpConventions\GrumphpTasksExtension
