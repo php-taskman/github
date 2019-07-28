@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhpTaskman\Github\Plugin\Task;
 
 use Github\Client;
@@ -7,7 +9,7 @@ use Robo\Result;
 
 final class AssetRemoveTask extends Github
 {
-    const ARGUMENTS = [
+    public const ARGUMENTS = [
         'file',
         'project',
         'tag',
@@ -15,7 +17,7 @@ final class AssetRemoveTask extends Github
         'user',
     ];
 
-    const NAME = 'github.asset.remove';
+    public const NAME = 'github.asset.remove';
 
     /**
      * {@inheritdoc}

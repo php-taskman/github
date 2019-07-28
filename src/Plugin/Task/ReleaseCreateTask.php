@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhpTaskman\Github\Plugin\Task;
 
 use Github\Client;
@@ -7,7 +9,7 @@ use Robo\Result;
 
 final class ReleaseCreateTask extends Github
 {
-    const ARGUMENTS = [
+    public const ARGUMENTS = [
         'project',
         'tag',
         'token',
@@ -19,7 +21,7 @@ final class ReleaseCreateTask extends Github
         'prerelease',
     ];
 
-    const NAME = 'github.release.create';
+    public const NAME = 'github.release.create';
 
     /**
      * {@inheritdoc}
@@ -40,11 +42,11 @@ final class ReleaseCreateTask extends Github
             'tag_name' => $arguments['tag'],
             'target_commitish' => $arguments['target'],
             'name' => $arguments['name'],
-            'body' => \file_exists($arguments['body']) ? \file_get_contents($arguments['body']) : $arguments['body'],
+            'body' => file_exists($arguments['body']) ? file_get_contents($arguments['body']) : $arguments['body'],
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];
-        $post = \array_filter($post, '\strlen');
+        $post = array_filter($post, '\strlen');
 
         $github = new Client();
         $github->authenticate($arguments['token'], null, Client::AUTH_URL_TOKEN);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhpTaskman\Github\Plugin\Task;
 
 use Github\Client;
@@ -7,7 +9,7 @@ use Robo\Result;
 
 final class ReleaseEditTask extends Github
 {
-    const ARGUMENTS = [
+    public const ARGUMENTS = [
         'project',
         'tag',
         'token',
@@ -18,7 +20,7 @@ final class ReleaseEditTask extends Github
         'prerelease',
     ];
 
-    const NAME = 'github.release.edit';
+    public const NAME = 'github.release.edit';
 
     /**
      * {@inheritdoc}
@@ -45,11 +47,11 @@ final class ReleaseEditTask extends Github
         $post = [
             'tag_name' => $arguments['tag'],
             'name' => $arguments['name'],
-            'body' => \file_exists($arguments['body']) ? \file_get_contents($arguments['body']) : $arguments['body'],
+            'body' => file_exists($arguments['body']) ? file_get_contents($arguments['body']) : $arguments['body'],
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];
-        $post = \array_filter($post, '\strlen');
+        $post = array_filter($post, '\strlen');
         $post += [
             'target_commitish' => $release['target_commitish'],
             'name' => $release['name'],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhpTaskman\Github\Plugin\Task;
 
 use Github\Client;

@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">= 7.1",
+        "php": ">= 7.1.3",
         "ext-fileinfo": "*",
         "knplabs/github-api": "^2.11",
         "php-http/guzzle6-adapter": "^1.1",

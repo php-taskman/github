@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhpTaskman\Github\Plugin\Task;
 
 use Github\Client;
@@ -7,7 +9,7 @@ use Robo\Result;
 
 final class AssetUploadTask extends Github
 {
-    const ARGUMENTS = [
+    public const ARGUMENTS = [
         'file',
         'project',
         'tag',
@@ -15,7 +17,7 @@ final class AssetUploadTask extends Github
         'user',
     ];
 
-    const NAME = 'github.asset.upload';
+    public const NAME = 'github.asset.upload';
 
     /**
      * {@inheritdoc}
@@ -37,15 +39,15 @@ final class AssetUploadTask extends Github
         $github = new Client();
         $github->authenticate($arguments['token'], null, Client::AUTH_URL_TOKEN);
 
-        if (false === $file = \realpath($arguments['file'])) {
+        if (false === $file = realpath($arguments['file'])) {
             return new Result($this, '1', 'Unable to access the file ' . $arguments['file']);
         }
 
-        if (false === $mime = \mime_content_type($file)) {
+        if (false === $mime = mime_content_type($file)) {
             return new Result($this, '1', 'Unable to get mimetype of file ' . $arguments['file']);
         }
 
-        if (false === $content = \file_get_contents($file)) {
+        if (false === $content = file_get_contents($file)) {
             return new Result($this, '1', 'Unable to get content of file ' . $arguments['file']);
         }
 
