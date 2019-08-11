@@ -47,7 +47,10 @@ final class ReleaseEditTask extends Github
         $post = [
             'tag_name' => $arguments['tag'],
             'name' => $arguments['name'],
-            'body' => file_exists($arguments['body']) ? file_get_contents($arguments['body']) : $arguments['body'],
+            'body' => null !== $arguments['body']
+            && file_exists($arguments['body'])
+            ? file_get_contents($arguments['body'])
+            : $arguments['body'],
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];

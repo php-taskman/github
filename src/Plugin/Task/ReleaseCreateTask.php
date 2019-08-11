@@ -42,7 +42,10 @@ final class ReleaseCreateTask extends Github
             'tag_name' => $arguments['tag'],
             'target_commitish' => $arguments['target'],
             'name' => $arguments['name'],
-            'body' => file_exists($arguments['body']) ? file_get_contents($arguments['body']) : $arguments['body'],
+            'body' => null !== $arguments['body']
+            && file_exists($arguments['body'])
+            ? file_get_contents($arguments['body'])
+            : $arguments['body'],
             'draft' => $arguments['draft'],
             'prerelease' => $arguments['prerelease'],
         ];
