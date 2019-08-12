@@ -38,15 +38,15 @@ final class AssetUploadTask extends Github
         $github->authenticate($arguments['token'], null, Client::AUTH_URL_TOKEN);
 
         if (false === $file = realpath($arguments['file'])) {
-            return new Result($this, '1', 'Unable to access the file ' . $arguments['file']);
+            return new Result($this, 1, 'Unable to access the file ' . $arguments['file']);
         }
 
         if (false === $mime = mime_content_type($file)) {
-            return new Result($this, '1', 'Unable to get mimetype of file ' . $arguments['file']);
+            return new Result($this, 1, 'Unable to get mimetype of file ' . $arguments['file']);
         }
 
         if (false === $content = file_get_contents($file)) {
-            return new Result($this, '1', 'Unable to get content of file ' . $arguments['file']);
+            return new Result($this, 1, 'Unable to get content of file ' . $arguments['file']);
         }
 
         try {
