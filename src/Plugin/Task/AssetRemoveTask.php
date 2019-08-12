@@ -61,6 +61,7 @@ final class AssetRemoveTask extends Github
             $github
                 ->repo()
                 ->releases()
+                ->assets()
                 ->remove(
                     $arguments['user'],
                     $arguments['project'],
